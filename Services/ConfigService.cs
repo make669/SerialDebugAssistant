@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json;
 using Models;
 using Properties;
 using Services.Interfaces;
@@ -6,11 +7,17 @@ using Utils;
 
 namespace Services
 {
+    /// <summary>
+    /// 应用配置服务实现，提供配置文件读写与默认配置初始化。
+    /// </summary>
     public class ConfigService : IConfigService
     {
         private const string DefaultConfigFileName = "appsettings.json";
         private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
 
+        /// <summary>
+        /// 保存配置到 JSON 文件。
+        /// </summary>
         public OperationResult Save(AppSettings settings, string? filePath = null)
         {
             if (settings is null)
@@ -37,6 +44,9 @@ namespace Services
             }
         }
 
+        /// <summary>
+        /// 从 JSON 文件读取配置。
+        /// </summary>
         public OperationResult Load(string? filePath = null)
         {
             try
@@ -67,6 +77,9 @@ namespace Services
             }
         }
 
+        /// <summary>
+        /// 读取配置；若不存在或读取失败则创建并保存默认配置。
+        /// </summary>
         public OperationResult LoadOrCreateDefault(string? filePath = null)
         {
             var loadResult = Load(filePath);
@@ -90,6 +103,9 @@ namespace Services
             };
         }
 
+        /// <summary>
+        /// 解析配置文件路径。
+        /// </summary>
         private static string ResolveFilePath(string? filePath)
         {
             if (!string.IsNullOrWhiteSpace(filePath))
@@ -100,6 +116,9 @@ namespace Services
             return Path.Combine(AppContext.BaseDirectory, DefaultConfigFileName);
         }
 
+        /// <summary>
+        /// 构造失败结果对象。
+        /// </summary>
         private static OperationResult Fail(string message, Exception? ex = null, object? data = null)
         {
             return new OperationResult

@@ -1,4 +1,5 @@
 ﻿using System.IO.Ports;
+using System.IO.Ports;
 using Models;
 using Models.Enums;
 using Services.Interfaces;
@@ -6,6 +7,9 @@ using Utils;
 
 namespace Services
 {
+    /// <summary>
+    /// 串口服务实现，负责连接管理、收发数据与资源释放。
+    /// </summary>
     public class SerialService : ISerialService
     {
         private readonly object _syncRoot = new();
@@ -14,17 +18,33 @@ namespace Services
         private SerialPortConfig? _config;
         private bool _disposed;
 
+        /// <summary>
+        /// 初始化串口服务。
+        /// </summary>
+        /// <param name="checksumService">校验服务，空则使用默认实现。</param>
         public SerialService(IChecksumService? checksumService = null)
         {
             _checksumService = checksumService ?? new ChecksumService();
         }
 
+        /// <summary>
+        /// 当前串口是否已打开。
+        /// </summary>
         public bool IsOpen => _serialPort?.IsOpen == true;
 
+        /// <summary>
+        /// 接收数据事件。
+        /// </summary>
         public event EventHandler<LogEntry>? DataReceived;
 
+        /// <summary>
+        /// 发送数据事件。
+        /// </summary>
         public event EventHandler<LogEntry>? DataSent;
 
+        /// <summary>
+        /// 按配置打开串口。
+        /// </summary>
         public OperationResult Open(SerialPortConfig config)
         {
             ThrowIfDisposed();
@@ -79,6 +99,9 @@ namespace Services
             }
         }
 
+        /// <summary>
+        /// 关闭并释放当前串口实例。
+        /// </summary>
         public OperationResult Close()
         {
             if (_disposed)
@@ -114,6 +137,9 @@ namespace Services
             }
         }
 
+        /// <summary>
+        /// 发送字节数据，可按需附加校验值。
+        /// </summary>
         public OperationResult SendBytes(byte[]? data, ChecksumType checksumType = ChecksumType.None, bool appendChecksum = false)
         {
             ThrowIfDisposed();
@@ -153,6 +179,9 @@ namespace Services
             }
         }
 
+        /// <summary>
+        /// 发送文本数据。
+        /// </summary>
         public OperationResult SendText(string? text, string? encodingName = null, ChecksumType checksumType = ChecksumType.None, bool appendChecksum = false)
         {
             ThrowIfDisposed();
@@ -167,6 +196,9 @@ namespace Services
             return SendBytes(bytes, checksumType, appendChecksum);
         }
 
+        /// <summary>
+        /// 构建统一日志消息对象。
+        /// </summary>
         public LogEntry BuildMessage(byte[]? rawData, MessageDirection direction, DataDisplayMode displayMode, string? encodingName = null)
         {
             var payload = rawData ?? Array.Empty<byte>();
@@ -184,6 +216,9 @@ namespace Services
             };
         }
 
+        /// <summary>
+        /// 释放串口资源。
+        /// </summary>
         public void Dispose()
         {
             if (_disposed)
@@ -196,6 +231,9 @@ namespace Services
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// 串口底层接收事件处理。
+        /// </summary>
         private void OnDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             var serialPort = _serialPort;
@@ -232,6 +270,10 @@ namespace Services
             }
         }
 
+        /// <summary>
+        /// 校验串口配置是否合法。
+        /// </summary>
+        /// <returns>合法返回 <see langword="null"/>，否则返回错误消息。</returns>
         private static string? ValidateConfig(SerialPortConfig config)
         {
             if (!ValidationHelper.IsValidPortName(config.PortName))
@@ -277,6 +319,9 @@ namespace Services
             return null;
         }
 
+        /// <summary>
+        /// 构造成功结果对象。
+        /// </summary>
         private static OperationResult Success(string message, object? data)
         {
             return new OperationResult
@@ -287,6 +332,9 @@ namespace Services
             };
         }
 
+        /// <summary>
+        /// 构造失败结果对象。
+        /// </summary>
         private static OperationResult Fail(string message, Exception? ex = null)
         {
             return new OperationResult
@@ -297,6 +345,9 @@ namespace Services
             };
         }
 
+        /// <summary>
+        /// 若对象已释放则抛出异常。
+        /// </summary>
         private void ThrowIfDisposed()
         {
             ObjectDisposedException.ThrowIf(_disposed, this);
