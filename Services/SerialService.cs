@@ -1,6 +1,305 @@
-﻿namespace Services
+﻿using System.IO.Ports;
+using Models;
+using Models.Enums;
+using Services.Interfaces;
+using Utils;
+
+namespace Services
 {
-    public class SerialService
+    public class SerialService : ISerialService
     {
+        private readonly object _syncRoot = new();
+        private readonly IChecksumService _checksumService;
+        private SerialPort? _serialPort;
+        private SerialPortConfig? _config;
+        private bool _disposed;
+
+        public SerialService(IChecksumService? checksumService = null)
+        {
+            _checksumService = checksumService ?? new ChecksumService();
+        }
+
+        public bool IsOpen => _serialPort?.IsOpen == true;
+
+        public event EventHandler<LogEntry>? DataReceived;
+
+        public event EventHandler<LogEntry>? DataSent;
+
+        public OperationResult Open(SerialPortConfig config)
+        {
+            ThrowIfDisposed();
+
+            if (config is null)
+            {
+                return Fail("串口配置不能为空。");
+            }
+
+            var validationMessage = ValidateConfig(config);
+            if (!string.IsNullOrEmpty(validationMessage))
+            {
+                return Fail(validationMessage);
+            }
+
+            try
+            {
+                lock (_syncRoot)
+                {
+                    if (IsOpen)
+                    {
+                        return Success("串口已打开。", _serialPort?.PortName);
+                    }
+
+                    var existingPorts = SerialPort.GetPortNames();
+                    if (!existingPorts.Contains(config.PortName, StringComparer.OrdinalIgnoreCase))
+                    {
+                        return Fail($"串口不存在: {config.PortName}");
+                    }
+
+                    var serialPort = new SerialPort(config.PortName, config.BaudRate, config.Parity, config.DataBits, config.StopBits)
+                    {
+                        Handshake = config.Handshake,
+                        ReadTimeout = config.ReadTimeout,
+                        WriteTimeout = config.WriteTimeout,
+                        DtrEnable = config.DtrEnable,
+                        RtsEnable = config.RtsEnable
+                    };
+
+                    serialPort.DataReceived += OnDataReceived;
+                    serialPort.Open();
+
+                    _serialPort = serialPort;
+                    _config = config;
+
+                    return Success("串口打开成功。", config.PortName);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Fail("串口打开失败。", ex);
+            }
+        }
+
+        public OperationResult Close()
+        {
+            if (_disposed)
+            {
+                return Success("串口已释放。", null);
+            }
+
+            try
+            {
+                lock (_syncRoot)
+                {
+                    if (_serialPort is null)
+                    {
+                        return Success("串口已关闭。", null);
+                    }
+
+                    _serialPort.DataReceived -= OnDataReceived;
+                    if (_serialPort.IsOpen)
+                    {
+                        _serialPort.Close();
+                    }
+
+                    _serialPort.Dispose();
+                    _serialPort = null;
+                    _config = null;
+
+                    return Success("串口关闭成功。", null);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Fail("串口关闭失败。", ex);
+            }
+        }
+
+        public OperationResult SendBytes(byte[]? data, ChecksumType checksumType = ChecksumType.None, bool appendChecksum = false)
+        {
+            ThrowIfDisposed();
+
+            if (data is null || data.Length == 0)
+            {
+                return Fail("发送数据不能为空。");
+            }
+
+            if (!IsOpen || _serialPort is null)
+            {
+                return Fail("串口未打开。");
+            }
+
+            try
+            {
+                var payload = data.ToArray();
+                if (appendChecksum && checksumType != ChecksumType.None)
+                {
+                    var checksum = _checksumService.ComputeChecksumBytes(payload, checksumType);
+                    payload = payload.Concat(checksum).ToArray();
+                }
+
+                lock (_syncRoot)
+                {
+                    _serialPort.Write(payload, 0, payload.Length);
+                }
+
+                var message = BuildMessage(payload, MessageDirection.Send, DataDisplayMode.Hex, _config?.EncodingName);
+                DataSent?.Invoke(this, message);
+
+                return Success("发送成功。", payload);
+            }
+            catch (Exception ex)
+            {
+                return Fail("发送失败。", ex);
+            }
+        }
+
+        public OperationResult SendText(string? text, string? encodingName = null, ChecksumType checksumType = ChecksumType.None, bool appendChecksum = false)
+        {
+            ThrowIfDisposed();
+
+            if (string.IsNullOrEmpty(text))
+            {
+                return Fail("发送文本不能为空。");
+            }
+
+            var finalEncoding = string.IsNullOrWhiteSpace(encodingName) ? _config?.EncodingName : encodingName;
+            var bytes = EncodingHelper.GetBytes(text, finalEncoding);
+            return SendBytes(bytes, checksumType, appendChecksum);
+        }
+
+        public LogEntry BuildMessage(byte[]? rawData, MessageDirection direction, DataDisplayMode displayMode, string? encodingName = null)
+        {
+            var payload = rawData ?? Array.Empty<byte>();
+            var text = displayMode == DataDisplayMode.Hex
+                ? HexConverter.ToHexString(payload)
+                : EncodingHelper.GetString(payload, encodingName);
+
+            return new LogEntry
+            {
+                Timestamp = DateTime.Now,
+                Direction = direction,
+                DisplayMode = displayMode,
+                RawData = payload,
+                Message = text
+            };
+        }
+
+        public void Dispose()
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            Close();
+            _disposed = true;
+            GC.SuppressFinalize(this);
+        }
+
+        private void OnDataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            var serialPort = _serialPort;
+            if (serialPort is null || !serialPort.IsOpen)
+            {
+                return;
+            }
+
+            try
+            {
+                var count = serialPort.BytesToRead;
+                if (count <= 0)
+                {
+                    return;
+                }
+
+                var buffer = new byte[count];
+                var read = serialPort.Read(buffer, 0, count);
+                if (read <= 0)
+                {
+                    return;
+                }
+
+                if (read < count)
+                {
+                    Array.Resize(ref buffer, read);
+                }
+
+                var message = BuildMessage(buffer, MessageDirection.Receive, DataDisplayMode.Text, _config?.EncodingName);
+                DataReceived?.Invoke(this, message);
+            }
+            catch
+            {
+            }
+        }
+
+        private static string? ValidateConfig(SerialPortConfig config)
+        {
+            if (!ValidationHelper.IsValidPortName(config.PortName))
+            {
+                return "串口名称无效。";
+            }
+
+            if (!ValidationHelper.IsValidBaudRate(config.BaudRate))
+            {
+                return "波特率无效。";
+            }
+
+            if (!ValidationHelper.IsValidDataBits(config.DataBits))
+            {
+                return "数据位无效。";
+            }
+
+            if (!ValidationHelper.IsValidParity((int)config.Parity))
+            {
+                return "校验位无效。";
+            }
+
+            if (!ValidationHelper.IsValidStopBits((int)config.StopBits))
+            {
+                return "停止位无效。";
+            }
+
+            if (!ValidationHelper.IsValidHandshake((int)config.Handshake))
+            {
+                return "握手协议无效。";
+            }
+
+            if (!ValidationHelper.IsValidTimeout(config.ReadTimeout) || !ValidationHelper.IsValidTimeout(config.WriteTimeout))
+            {
+                return "超时时间无效。";
+            }
+
+            if (!ValidationHelper.IsValidEncodingName(config.EncodingName))
+            {
+                return "编码名称无效。";
+            }
+
+            return null;
+        }
+
+        private static OperationResult Success(string message, object? data)
+        {
+            return new OperationResult
+            {
+                IsSuccess = true,
+                Message = message,
+                Data = data
+            };
+        }
+
+        private static OperationResult Fail(string message, Exception? ex = null)
+        {
+            return new OperationResult
+            {
+                IsSuccess = false,
+                Message = message,
+                Exception = ex
+            };
+        }
+
+        private void ThrowIfDisposed()
+        {
+            ObjectDisposedException.ThrowIf(_disposed, this);
+        }
     }
 }

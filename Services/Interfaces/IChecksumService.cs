@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Models.Enums;
 
 namespace Services.Interfaces
 {
-    internal class IChecksumService
+    public interface IChecksumService
     {
+        byte[] ComputeChecksumBytes(byte[]? data, ChecksumType checksumType);
+
+        string ComputeChecksumHex(byte[]? data, ChecksumType checksumType, bool upperCase = true, string separator = " ");
+
+        bool ValidateChecksum(byte[]? data, ChecksumType checksumType, byte[]? expectedChecksum);
     }
 }

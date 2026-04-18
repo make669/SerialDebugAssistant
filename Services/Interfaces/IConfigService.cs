@@ -1,12 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Models;
+using Properties;
 
 namespace Services.Interfaces
 {
-    internal class IConfigService
+    public interface IConfigService
     {
+        OperationResult Save(AppSettings settings, string? filePath = null);
+
+        OperationResult Load(string? filePath = null);
+
+        OperationResult LoadOrCreateDefault(string? filePath = null);
     }
 }

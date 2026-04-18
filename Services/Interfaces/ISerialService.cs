@@ -1,12 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Models;
+using Models.Enums;
 
 namespace Services.Interfaces
 {
-    internal class ISerialService
+    public interface ISerialService : IDisposable
     {
+        bool IsOpen { get; }
+
+        event EventHandler<LogEntry>? DataReceived;
+
+        event EventHandler<LogEntry>? DataSent;
+
+        OperationResult Open(SerialPortConfig config);
+
+        OperationResult Close();
+
+        OperationResult SendBytes(byte[]? data, ChecksumType checksumType = ChecksumType.None, bool appendChecksum = false);
+
+        OperationResult SendText(string? text, string? encodingName = null, ChecksumType checksumType = ChecksumType.None, bool appendChecksum = false);
+
+        LogEntry BuildMessage(byte[]? rawData, MessageDirection direction, DataDisplayMode displayMode, string? encodingName = null);
     }
 }
