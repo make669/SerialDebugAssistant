@@ -1,5 +1,7 @@
 ﻿using Models;
 
+using Models;
+
 namespace Properties
 {
     /// <summary>
@@ -12,14 +14,17 @@ namespace Properties
         /// </summary>
         public SerialPortConfig DefaultSerialPortConfig { get; set; } = new()
         {
-            BaudRate = AppConstants.DefaultBaudRate,
-            Parity = AppConstants.DefaultParity,
-            DataBits = AppConstants.DefaultDataBits,
-            StopBits = AppConstants.DefaultStopBits,
-            Handshake = AppConstants.DefaultHandshake,
-            ReadTimeout = AppConstants.DefaultReadTimeoutMs,
-            WriteTimeout = AppConstants.DefaultWriteTimeoutMs,
-            EncodingName = AppConstants.DefaultEncodingName
+            PortName = AppConstants.DefaultPortName,//串口名称
+            BaudRate = AppConstants.DefaultBaudRate,//波特率
+            Parity = AppConstants.DefaultParity,//校验位
+            DataBits = AppConstants.DefaultDataBits,//数据位
+            StopBits = AppConstants.DefaultStopBits,//停止位
+            Handshake = AppConstants.DefaultHandshake,//握手协议
+            ReadTimeout = AppConstants.DefaultReadTimeoutMs,//读取超时时间
+            WriteTimeout = AppConstants.DefaultWriteTimeoutMs,//写入超时时间
+            DtrEnable = AppConstants.DefaultDtrEnable,//是否启用 DTR
+            RtsEnable = AppConstants.DefaultRtsEnable,//是否启用 RTS
+            EncodingName = AppConstants.DefaultEncodingName//编码名称
         };
 
         /// <summary>
