@@ -1,5 +1,4 @@
 ﻿using System.IO.Ports;
-using System.IO.Ports;
 using Models;
 using Models.Enums;
 using Services.Interfaces;

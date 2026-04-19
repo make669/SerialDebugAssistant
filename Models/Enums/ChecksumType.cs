@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Models.Enums
 {
     /// <summary>
@@ -11,10 +6,6 @@ namespace Models.Enums
     /// </summary>
     public enum ChecksumType
     {
-
-
-       
-
         /// <summary>
         /// 不用校验。
         /// </summary>

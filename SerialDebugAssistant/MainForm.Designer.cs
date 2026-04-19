@@ -114,34 +114,38 @@
             pnlTopBar.Controls.Add(lblPortName);
             pnlTopBar.Dock = DockStyle.Top;
             pnlTopBar.Location = new Point(0, 0);
+            pnlTopBar.Margin = new Padding(4, 4, 4, 4);
             pnlTopBar.Name = "pnlTopBar";
-            pnlTopBar.Size = new Size(1200, 124);
+            pnlTopBar.Size = new Size(1029, 117);
             pnlTopBar.TabIndex = 0;
             // 
             // lblErrorCount
             // 
             lblErrorCount.AutoSize = true;
-            lblErrorCount.Location = new Point(913, 79);
+            lblErrorCount.Location = new Point(840, 81);
+            lblErrorCount.Margin = new Padding(4, 0, 4, 0);
             lblErrorCount.Name = "lblErrorCount";
-            lblErrorCount.Size = new Size(67, 17);
+            lblErrorCount.Size = new Size(75, 20);
             lblErrorCount.TabIndex = 21;
             lblErrorCount.Text = "错误: 0 次";
             // 
             // lblTxBytes
             // 
             lblTxBytes.AutoSize = true;
-            lblTxBytes.Location = new Point(783, 79);
+            lblTxBytes.Location = new Point(694, 81);
+            lblTxBytes.Margin = new Padding(4, 0, 4, 0);
             lblTxBytes.Name = "lblTxBytes";
-            lblTxBytes.Size = new Size(70, 17);
+            lblTxBytes.Size = new Size(90, 20);
             lblTxBytes.TabIndex = 20;
             lblTxBytes.Text = "发送: 0 字节";
             // 
             // lblRxBytes
             // 
             lblRxBytes.AutoSize = true;
-            lblRxBytes.Location = new Point(649, 79);
+            lblRxBytes.Location = new Point(549, 81);
+            lblRxBytes.Margin = new Padding(4, 0, 4, 0);
             lblRxBytes.Name = "lblRxBytes";
-            lblRxBytes.Size = new Size(70, 17);
+            lblRxBytes.Size = new Size(90, 20);
             lblRxBytes.TabIndex = 19;
             lblRxBytes.Text = "接收: 0 字节";
             // 
@@ -149,17 +153,19 @@
             // 
             lblConnectionState.AutoSize = true;
             lblConnectionState.ForeColor = Color.DarkRed;
-            lblConnectionState.Location = new Point(529, 79);
+            lblConnectionState.Location = new Point(437, 81);
+            lblConnectionState.Margin = new Padding(4, 0, 4, 0);
             lblConnectionState.Name = "lblConnectionState";
-            lblConnectionState.Size = new Size(68, 17);
+            lblConnectionState.Size = new Size(92, 20);
             lblConnectionState.TabIndex = 18;
             lblConnectionState.Text = "状态: 未连接";
             // 
             // btnSaveConfig
             // 
-            btnSaveConfig.Location = new Point(382, 75);
+            btnSaveConfig.Location = new Point(332, 76);
+            btnSaveConfig.Margin = new Padding(4, 4, 4, 4);
             btnSaveConfig.Name = "btnSaveConfig";
-            btnSaveConfig.Size = new Size(112, 25);
+            btnSaveConfig.Size = new Size(96, 29);
             btnSaveConfig.TabIndex = 17;
             btnSaveConfig.Text = "保存配置";
             btnSaveConfig.UseVisualStyleBackColor = true;
@@ -167,9 +173,10 @@
             // 
             // btnLoadConfig
             // 
-            btnLoadConfig.Location = new Point(264, 75);
+            btnLoadConfig.Location = new Point(228, 76);
+            btnLoadConfig.Margin = new Padding(4, 4, 4, 4);
             btnLoadConfig.Name = "btnLoadConfig";
-            btnLoadConfig.Size = new Size(112, 25);
+            btnLoadConfig.Size = new Size(96, 29);
             btnLoadConfig.TabIndex = 16;
             btnLoadConfig.Text = "加载配置";
             btnLoadConfig.UseVisualStyleBackColor = true;
@@ -177,9 +184,10 @@
             // 
             // btnOpenClose
             // 
-            btnOpenClose.Location = new Point(146, 75);
+            btnOpenClose.Location = new Point(123, 76);
+            btnOpenClose.Margin = new Padding(4, 4, 4, 4);
             btnOpenClose.Name = "btnOpenClose";
-            btnOpenClose.Size = new Size(112, 25);
+            btnOpenClose.Size = new Size(96, 29);
             btnOpenClose.TabIndex = 15;
             btnOpenClose.Text = "打开串口";
             btnOpenClose.UseVisualStyleBackColor = true;
@@ -187,9 +195,10 @@
             // 
             // btnRefreshPorts
             // 
-            btnRefreshPorts.Location = new Point(28, 75);
+            btnRefreshPorts.Location = new Point(19, 76);
+            btnRefreshPorts.Margin = new Padding(4, 4, 4, 4);
             btnRefreshPorts.Name = "btnRefreshPorts";
-            btnRefreshPorts.Size = new Size(112, 25);
+            btnRefreshPorts.Size = new Size(96, 29);
             btnRefreshPorts.TabIndex = 14;
             btnRefreshPorts.Text = "刷新串口";
             btnRefreshPorts.UseVisualStyleBackColor = true;
@@ -199,125 +208,139 @@
             // 
             cmbEncoding.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbEncoding.FormattingEnabled = true;
-            cmbEncoding.Location = new Point(1003, 29);
+            cmbEncoding.Location = new Point(842, 34);
+            cmbEncoding.Margin = new Padding(4, 4, 4, 4);
             cmbEncoding.Name = "cmbEncoding";
-            cmbEncoding.Size = new Size(150, 25);
+            cmbEncoding.Size = new Size(166, 28);
             cmbEncoding.TabIndex = 13;
             // 
             // cmbHandshake
             // 
             cmbHandshake.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbHandshake.FormattingEnabled = true;
-            cmbHandshake.Location = new Point(840, 29);
+            cmbHandshake.Location = new Point(705, 34);
+            cmbHandshake.Margin = new Padding(4, 4, 4, 4);
             cmbHandshake.Name = "cmbHandshake";
-            cmbHandshake.Size = new Size(131, 25);
+            cmbHandshake.Size = new Size(129, 28);
             cmbHandshake.TabIndex = 12;
             // 
             // cmbStopBits
             // 
             cmbStopBits.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbStopBits.FormattingEnabled = true;
-            cmbStopBits.Location = new Point(703, 29);
+            cmbStopBits.Location = new Point(577, 34);
+            cmbStopBits.Margin = new Padding(4, 4, 4, 4);
             cmbStopBits.Name = "cmbStopBits";
-            cmbStopBits.Size = new Size(98, 25);
+            cmbStopBits.Size = new Size(118, 28);
             cmbStopBits.TabIndex = 11;
             // 
             // cmbDataBits
             // 
             cmbDataBits.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbDataBits.FormattingEnabled = true;
-            cmbDataBits.Location = new Point(575, 29);
+            cmbDataBits.Location = new Point(464, 34);
+            cmbDataBits.Margin = new Padding(4, 4, 4, 4);
             cmbDataBits.Name = "cmbDataBits";
-            cmbDataBits.Size = new Size(85, 25);
+            cmbDataBits.Size = new Size(104, 28);
             cmbDataBits.TabIndex = 10;
             // 
             // cmbParity
             // 
             cmbParity.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbParity.FormattingEnabled = true;
-            cmbParity.Location = new Point(437, 29);
+            cmbParity.Location = new Point(351, 34);
+            cmbParity.Margin = new Padding(4, 4, 4, 4);
             cmbParity.Name = "cmbParity";
-            cmbParity.Size = new Size(99, 25);
+            cmbParity.Size = new Size(104, 28);
             cmbParity.TabIndex = 9;
             // 
             // cmbBaudRate
             // 
             cmbBaudRate.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbBaudRate.FormattingEnabled = true;
-            cmbBaudRate.Location = new Point(278, 29);
+            cmbBaudRate.Location = new Point(185, 34);
+            cmbBaudRate.Margin = new Padding(4, 4, 4, 4);
             cmbBaudRate.Name = "cmbBaudRate";
-            cmbBaudRate.Size = new Size(121, 25);
+            cmbBaudRate.Size = new Size(157, 28);
             cmbBaudRate.TabIndex = 8;
             // 
             // cmbPortName
             // 
             cmbPortName.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbPortName.FormattingEnabled = true;
-            cmbPortName.Location = new Point(88, 29);
+            cmbPortName.Location = new Point(19, 34);
+            cmbPortName.Margin = new Padding(4, 4, 4, 4);
             cmbPortName.Name = "cmbPortName";
-            cmbPortName.Size = new Size(147, 25);
+            cmbPortName.Size = new Size(157, 28);
             cmbPortName.TabIndex = 7;
             // 
             // lblEncoding
             // 
             lblEncoding.AutoSize = true;
-            lblEncoding.Location = new Point(1003, 9);
+            lblEncoding.Location = new Point(842, 11);
+            lblEncoding.Margin = new Padding(4, 0, 4, 0);
             lblEncoding.Name = "lblEncoding";
-            lblEncoding.Size = new Size(56, 17);
+            lblEncoding.Size = new Size(69, 20);
             lblEncoding.TabIndex = 6;
             lblEncoding.Text = "编码格式";
             // 
             // lblHandshake
             // 
             lblHandshake.AutoSize = true;
-            lblHandshake.Location = new Point(840, 9);
+            lblHandshake.Location = new Point(705, 11);
+            lblHandshake.Margin = new Padding(4, 0, 4, 0);
             lblHandshake.Name = "lblHandshake";
-            lblHandshake.Size = new Size(56, 17);
+            lblHandshake.Size = new Size(69, 20);
             lblHandshake.TabIndex = 5;
             lblHandshake.Text = "握手协议";
             // 
             // lblStopBits
             // 
             lblStopBits.AutoSize = true;
-            lblStopBits.Location = new Point(703, 9);
+            lblStopBits.Location = new Point(577, 11);
+            lblStopBits.Margin = new Padding(4, 0, 4, 0);
             lblStopBits.Name = "lblStopBits";
-            lblStopBits.Size = new Size(44, 17);
+            lblStopBits.Size = new Size(54, 20);
             lblStopBits.TabIndex = 4;
             lblStopBits.Text = "停止位";
             // 
             // lblDataBits
             // 
             lblDataBits.AutoSize = true;
-            lblDataBits.Location = new Point(575, 9);
+            lblDataBits.Location = new Point(464, 11);
+            lblDataBits.Margin = new Padding(4, 0, 4, 0);
             lblDataBits.Name = "lblDataBits";
-            lblDataBits.Size = new Size(44, 17);
+            lblDataBits.Size = new Size(54, 20);
             lblDataBits.TabIndex = 3;
             lblDataBits.Text = "数据位";
             // 
             // lblParity
             // 
             lblParity.AutoSize = true;
-            lblParity.Location = new Point(437, 9);
+            lblParity.Location = new Point(351, 11);
+            lblParity.Margin = new Padding(4, 0, 4, 0);
             lblParity.Name = "lblParity";
-            lblParity.Size = new Size(44, 17);
+            lblParity.Size = new Size(54, 20);
             lblParity.TabIndex = 2;
             lblParity.Text = "校验位";
             // 
             // lblBaudRate
             // 
             lblBaudRate.AutoSize = true;
-            lblBaudRate.Location = new Point(278, 9);
+            lblBaudRate.Location = new Point(185, 11);
+            lblBaudRate.Margin = new Padding(4, 0, 4, 0);
             lblBaudRate.Name = "lblBaudRate";
-            lblBaudRate.Size = new Size(44, 17);
+            lblBaudRate.Size = new Size(54, 20);
             lblBaudRate.TabIndex = 1;
             lblBaudRate.Text = "波特率";
             // 
             // lblPortName
             // 
             lblPortName.AutoSize = true;
-            lblPortName.Location = new Point(88, 9);
+            lblPortName.Location = new Point(19, 11);
+            lblPortName.Margin = new Padding(4, 0, 4, 0);
             lblPortName.Name = "lblPortName";
-            lblPortName.Size = new Size(44, 17);
+            lblPortName.Size = new Size(54, 20);
             lblPortName.TabIndex = 0;
             lblPortName.Text = "串口号";
             // 
@@ -329,17 +352,19 @@
             pnlLeftNav.Controls.Add(btnNavConfig);
             pnlLeftNav.Controls.Add(btnNavRealtime);
             pnlLeftNav.Dock = DockStyle.Left;
-            pnlLeftNav.Location = new Point(0, 124);
+            pnlLeftNav.Location = new Point(0, 117);
+            pnlLeftNav.Margin = new Padding(4, 4, 4, 4);
             pnlLeftNav.Name = "pnlLeftNav";
-            pnlLeftNav.Size = new Size(156, 604);
+            pnlLeftNav.Size = new Size(154, 445);
             pnlLeftNav.TabIndex = 1;
             // 
             // btnNavTools
             // 
             btnNavTools.Dock = DockStyle.Top;
-            btnNavTools.Location = new Point(0, 102);
+            btnNavTools.Location = new Point(0, 120);
+            btnNavTools.Margin = new Padding(4, 4, 4, 4);
             btnNavTools.Name = "btnNavTools";
-            btnNavTools.Size = new Size(154, 34);
+            btnNavTools.Size = new Size(152, 40);
             btnNavTools.TabIndex = 3;
             btnNavTools.Text = "工具箱(预留)";
             btnNavTools.UseVisualStyleBackColor = true;
@@ -348,9 +373,10 @@
             // btnNavLogCenter
             // 
             btnNavLogCenter.Dock = DockStyle.Top;
-            btnNavLogCenter.Location = new Point(0, 68);
+            btnNavLogCenter.Location = new Point(0, 80);
+            btnNavLogCenter.Margin = new Padding(4, 4, 4, 4);
             btnNavLogCenter.Name = "btnNavLogCenter";
-            btnNavLogCenter.Size = new Size(154, 34);
+            btnNavLogCenter.Size = new Size(152, 40);
             btnNavLogCenter.TabIndex = 2;
             btnNavLogCenter.Text = "日志中心";
             btnNavLogCenter.UseVisualStyleBackColor = true;
@@ -359,9 +385,10 @@
             // btnNavConfig
             // 
             btnNavConfig.Dock = DockStyle.Top;
-            btnNavConfig.Location = new Point(0, 34);
+            btnNavConfig.Location = new Point(0, 40);
+            btnNavConfig.Margin = new Padding(4, 4, 4, 4);
             btnNavConfig.Name = "btnNavConfig";
-            btnNavConfig.Size = new Size(154, 34);
+            btnNavConfig.Size = new Size(152, 40);
             btnNavConfig.TabIndex = 1;
             btnNavConfig.Text = "配置中心";
             btnNavConfig.UseVisualStyleBackColor = true;
@@ -371,8 +398,9 @@
             // 
             btnNavRealtime.Dock = DockStyle.Top;
             btnNavRealtime.Location = new Point(0, 0);
+            btnNavRealtime.Margin = new Padding(4, 4, 4, 4);
             btnNavRealtime.Name = "btnNavRealtime";
-            btnNavRealtime.Size = new Size(154, 34);
+            btnNavRealtime.Size = new Size(152, 40);
             btnNavRealtime.TabIndex = 0;
             btnNavRealtime.Text = "实时收发";
             btnNavRealtime.UseVisualStyleBackColor = true;
@@ -386,9 +414,10 @@
             pnlMainHost.Controls.Add(ucConfigPanel);
             pnlMainHost.Controls.Add(ucRealtimePanel);
             pnlMainHost.Dock = DockStyle.Fill;
-            pnlMainHost.Location = new Point(156, 124);
+            pnlMainHost.Location = new Point(154, 117);
+            pnlMainHost.Margin = new Padding(4, 4, 4, 4);
             pnlMainHost.Name = "pnlMainHost";
-            pnlMainHost.Size = new Size(1044, 604);
+            pnlMainHost.Size = new Size(875, 445);
             pnlMainHost.TabIndex = 2;
             // 
             // ucToolsPanel
@@ -396,17 +425,19 @@
             ucToolsPanel.Controls.Add(lblToolsPlaceholder);
             ucToolsPanel.Dock = DockStyle.Fill;
             ucToolsPanel.Location = new Point(0, 0);
+            ucToolsPanel.Margin = new Padding(4, 4, 4, 4);
             ucToolsPanel.Name = "ucToolsPanel";
-            ucToolsPanel.Size = new Size(1042, 602);
+            ucToolsPanel.Size = new Size(873, 443);
             ucToolsPanel.TabIndex = 3;
             ucToolsPanel.Visible = false;
             // 
             // lblToolsPlaceholder
             // 
             lblToolsPlaceholder.AutoSize = true;
-            lblToolsPlaceholder.Location = new Point(28, 26);
+            lblToolsPlaceholder.Location = new Point(36, 31);
+            lblToolsPlaceholder.Margin = new Padding(4, 0, 4, 0);
             lblToolsPlaceholder.Name = "lblToolsPlaceholder";
-            lblToolsPlaceholder.Size = new Size(94, 17);
+            lblToolsPlaceholder.Size = new Size(144, 20);
             lblToolsPlaceholder.TabIndex = 0;
             lblToolsPlaceholder.Text = "工具箱模块（预留）";
             // 
@@ -417,8 +448,9 @@
             ucLogCenterPanel.Controls.Add(btnClearLog);
             ucLogCenterPanel.Dock = DockStyle.Fill;
             ucLogCenterPanel.Location = new Point(0, 0);
+            ucLogCenterPanel.Margin = new Padding(4, 4, 4, 4);
             ucLogCenterPanel.Name = "ucLogCenterPanel";
-            ucLogCenterPanel.Size = new Size(1042, 602);
+            ucLogCenterPanel.Size = new Size(873, 443);
             ucLogCenterPanel.TabIndex = 2;
             ucLogCenterPanel.Visible = false;
             // 
@@ -429,18 +461,21 @@
             dgvLogCenter.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvLogCenter.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvLogCenter.Dock = DockStyle.Bottom;
-            dgvLogCenter.Location = new Point(0, 48);
+            dgvLogCenter.Location = new Point(0, 54);
+            dgvLogCenter.Margin = new Padding(4, 4, 4, 4);
             dgvLogCenter.Name = "dgvLogCenter";
             dgvLogCenter.ReadOnly = true;
+            dgvLogCenter.RowHeadersWidth = 51;
             dgvLogCenter.RowTemplate.Height = 25;
-            dgvLogCenter.Size = new Size(1042, 554);
+            dgvLogCenter.Size = new Size(873, 389);
             dgvLogCenter.TabIndex = 2;
             // 
             // btnExportLog
             // 
-            btnExportLog.Location = new Point(121, 12);
+            btnExportLog.Location = new Point(156, 14);
+            btnExportLog.Margin = new Padding(4, 4, 4, 4);
             btnExportLog.Name = "btnExportLog";
-            btnExportLog.Size = new Size(101, 27);
+            btnExportLog.Size = new Size(130, 32);
             btnExportLog.TabIndex = 1;
             btnExportLog.Text = "导出日志";
             btnExportLog.UseVisualStyleBackColor = true;
@@ -448,9 +483,10 @@
             // 
             // btnClearLog
             // 
-            btnClearLog.Location = new Point(14, 12);
+            btnClearLog.Location = new Point(18, 14);
+            btnClearLog.Margin = new Padding(4, 4, 4, 4);
             btnClearLog.Name = "btnClearLog";
-            btnClearLog.Size = new Size(101, 27);
+            btnClearLog.Size = new Size(130, 32);
             btnClearLog.TabIndex = 0;
             btnClearLog.Text = "清空显示";
             btnClearLog.UseVisualStyleBackColor = true;
@@ -461,17 +497,19 @@
             ucConfigPanel.Controls.Add(lblConfigPlaceholder);
             ucConfigPanel.Dock = DockStyle.Fill;
             ucConfigPanel.Location = new Point(0, 0);
+            ucConfigPanel.Margin = new Padding(4, 4, 4, 4);
             ucConfigPanel.Name = "ucConfigPanel";
-            ucConfigPanel.Size = new Size(1042, 602);
+            ucConfigPanel.Size = new Size(873, 443);
             ucConfigPanel.TabIndex = 1;
             ucConfigPanel.Visible = false;
             // 
             // lblConfigPlaceholder
             // 
             lblConfigPlaceholder.AutoSize = true;
-            lblConfigPlaceholder.Location = new Point(28, 26);
+            lblConfigPlaceholder.Location = new Point(36, 31);
+            lblConfigPlaceholder.Margin = new Padding(4, 0, 4, 0);
             lblConfigPlaceholder.Name = "lblConfigPlaceholder";
-            lblConfigPlaceholder.Size = new Size(95, 17);
+            lblConfigPlaceholder.Size = new Size(159, 20);
             lblConfigPlaceholder.TabIndex = 0;
             lblConfigPlaceholder.Text = "配置中心模块（预留）";
             // 
@@ -484,8 +522,9 @@
             ucRealtimePanel.Controls.Add(lblSendContent);
             ucRealtimePanel.Dock = DockStyle.Fill;
             ucRealtimePanel.Location = new Point(0, 0);
+            ucRealtimePanel.Margin = new Padding(4, 4, 4, 4);
             ucRealtimePanel.Name = "ucRealtimePanel";
-            ucRealtimePanel.Size = new Size(1042, 602);
+            ucRealtimePanel.Size = new Size(873, 443);
             ucRealtimePanel.TabIndex = 0;
             // 
             // dgvRealtimeLog
@@ -495,18 +534,21 @@
             dgvRealtimeLog.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvRealtimeLog.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvRealtimeLog.Dock = DockStyle.Bottom;
-            dgvRealtimeLog.Location = new Point(0, 87);
+            dgvRealtimeLog.Location = new Point(0, 54);
+            dgvRealtimeLog.Margin = new Padding(4, 4, 4, 4);
             dgvRealtimeLog.Name = "dgvRealtimeLog";
             dgvRealtimeLog.ReadOnly = true;
+            dgvRealtimeLog.RowHeadersWidth = 51;
             dgvRealtimeLog.RowTemplate.Height = 25;
-            dgvRealtimeLog.Size = new Size(1042, 515);
+            dgvRealtimeLog.Size = new Size(873, 389);
             dgvRealtimeLog.TabIndex = 4;
             // 
             // btnSend
             // 
-            btnSend.Location = new Point(903, 31);
+            btnSend.Location = new Point(756, 13);
+            btnSend.Margin = new Padding(4, 4, 4, 4);
             btnSend.Name = "btnSend";
-            btnSend.Size = new Size(102, 29);
+            btnSend.Size = new Size(96, 29);
             btnSend.TabIndex = 3;
             btnSend.Text = "发送";
             btnSend.UseVisualStyleBackColor = true;
@@ -515,65 +557,73 @@
             // chkSendHex
             // 
             chkSendHex.AutoSize = true;
-            chkSendHex.Location = new Point(819, 36);
+            chkSendHex.Location = new Point(656, 15);
+            chkSendHex.Margin = new Padding(4, 4, 4, 4);
             chkSendHex.Name = "chkSendHex";
-            chkSendHex.Size = new Size(72, 21);
+            chkSendHex.Size = new Size(91, 24);
             chkSendHex.TabIndex = 2;
             chkSendHex.Text = "HEX发送";
             chkSendHex.UseVisualStyleBackColor = true;
             // 
             // txtSend
             // 
-            txtSend.Location = new Point(91, 33);
+            txtSend.Location = new Point(108, 14);
+            txtSend.Margin = new Padding(4, 4, 4, 4);
             txtSend.Name = "txtSend";
-            txtSend.Size = new Size(710, 23);
+            txtSend.Size = new Size(539, 27);
             txtSend.TabIndex = 1;
             // 
             // lblSendContent
             // 
             lblSendContent.AutoSize = true;
-            lblSendContent.Location = new Point(22, 36);
+            lblSendContent.Location = new Point(18, 18);
+            lblSendContent.Margin = new Padding(4, 0, 4, 0);
             lblSendContent.Name = "lblSendContent";
-            lblSendContent.Size = new Size(56, 17);
+            lblSendContent.Size = new Size(69, 20);
             lblSendContent.TabIndex = 0;
             lblSendContent.Text = "发送内容";
             // 
             // statusStripMain
             // 
+            statusStripMain.ImageScalingSize = new Size(20, 20);
             statusStripMain.Items.AddRange(new ToolStripItem[] { tsslStatus, tsslLogPath, tsslEncoding });
-            statusStripMain.Location = new Point(0, 728);
+            statusStripMain.Location = new Point(0, 562);
             statusStripMain.Name = "statusStripMain";
-            statusStripMain.Size = new Size(1200, 22);
+            statusStripMain.Padding = new Padding(1, 0, 18, 0);
+            statusStripMain.Size = new Size(1029, 26);
             statusStripMain.TabIndex = 3;
             statusStripMain.Text = "statusStrip1";
             // 
             // tsslStatus
             // 
             tsslStatus.Name = "tsslStatus";
-            tsslStatus.Size = new Size(44, 17);
+            tsslStatus.Size = new Size(39, 20);
             tsslStatus.Text = "就绪";
             // 
             // tsslLogPath
             // 
             tsslLogPath.Name = "tsslLogPath";
-            tsslLogPath.Size = new Size(48, 17);
+            tsslLogPath.Size = new Size(69, 20);
             tsslLogPath.Text = "日志路径";
             // 
             // tsslEncoding
             // 
             tsslEncoding.Name = "tsslEncoding";
-            tsslEncoding.Size = new Size(32, 17);
+            tsslEncoding.Size = new Size(37, 20);
             tsslEncoding.Text = "UTF";
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1200, 750);
+            ClientSize = new Size(1029, 588);
             Controls.Add(pnlMainHost);
             Controls.Add(pnlLeftNav);
             Controls.Add(statusStripMain);
             Controls.Add(pnlTopBar);
+            Margin = new Padding(4, 4, 4, 4);
+            MaximizeBox = false;
+            MinimumSize = new Size(1044, 626);
             Name = "MainForm";
             Text = "SerialDebugAssistant";
             FormClosing += MainForm_FormClosing;
