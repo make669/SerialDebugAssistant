@@ -1,4 +1,4 @@
-using System.Text;
+锘縰sing System.Text;
 using Utils;
 
 namespace Text;
@@ -8,7 +8,7 @@ public class EncodingHelperTests
     [Fact]
     public void Utf8_ShouldEncodeAndDecodeCorrectly()
     {
-        const string text = "串口调试助手";
+        const string text = "涓插彛璋冭瘯鍔╂墜";
 
         var bytes = EncodingHelper.GetBytes(text, "UTF-8");
         var decoded = EncodingHelper.GetString(bytes, "UTF-8");
@@ -30,7 +30,7 @@ public class EncodingHelperTests
     [Fact]
     public void Gbk_ShouldEncodeAndDecodeCorrectly()
     {
-        const string text = "中文GBK测试";
+        const string text = "涓枃GBK娴嬭瘯";
 
         var bytes = EncodingHelper.GetBytes(text, "GBK");
         var decoded = EncodingHelper.GetString(bytes, "GBK");
