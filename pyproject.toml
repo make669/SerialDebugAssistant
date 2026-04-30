@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sherlock-assistant"
+version = "0.1.0"
+description = "Sherlock — 基于多智能体协作的全知全能型个人学术与工作流助理"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+dependencies = [
+    "langchain>=0.2,<1.0",
+    "pyautogen>=0.2,<1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=0.23",
+]
