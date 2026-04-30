@@ -1,0 +1,61 @@
+# Sherlock — 基于多智能体协作的全知全能型个人学术与工作流助理
+
+本项目"Sherlock"旨在构建一个基于多智能体协作的个人学术与工作流助理，其核心架构注定了它是一个高Token消耗的应用。为了实现对复杂任务的深度理解而非浅层问答，我大量应用了公认的"Token倍增器"技术：在长文档处理上，我采用链式思维与思维树进行层次化摘要与矛盾点挖掘，需要将完整上下文带入进行多步串行推理；在任务规划上，我构建了基于多Agent协作的"辩论-反思"架构，通过红蓝军对抗与自我博弈生成计划，单次任务需维持包含复杂历史记录的多轮长上下文窗口；在代码生成上，我实现了带自动化测试的自修护闭环，模型需要反复阅读源码、报错与环境输出来进行反思修正；并且，系统后台还在持续进行基于渐进式摘要的长期记忆压缩。这些多步推理与密集型自监督流程，使得单项任务的Token消耗可达普通对话的6至8倍，动辄单次即消耗上万Token。本项目重度依赖 LangChain、AutoGen、MiMo 等大模型应用架构，才有能力编排如此复杂的链式调用。当然，我在架构设计上也力求资源合理化，正在探索通过本地小模型对简单意图进行分流，仅在涉及高价值、强逻辑的多步推理任务时，才调用大规模云端模型，力求在极致的智能深度与资源消耗间取得平衡。
+
+---
+
+## Architecture
+
+```mermaid
+flowchart TB
+    U[User] --> UI[CLI / Web UI]
+    UI --> ORCH[Orchestrator\nWorkflow Router]
+
+    ORCH -->|Simple intent| LOCAL[Local Small Model\nIntent Triage]
+    LOCAL --> ORCH
+
+    ORCH -->|Complex task| CTX[Context Builder\nLong-context Packing]
+    CTX --> MEM[Memory System\nProgressive Summarization]
+    MEM --> CTX
+
+    CTX --> DOC[Long-Doc Pipeline\nCoT / ToT Summaries + Contradiction Mining]
+    CTX --> PLAN[Planning Arena\nMulti-Agent Debate Red/Blue + Reflection]
+    CTX --> CODE[Code Agent Loop\nCode → Test → Error → Reflect → Patch]
+
+    DOC --> ORCH
+    PLAN --> ORCH
+    CODE --> ORCH
+
+    ORCH --> OUT[Structured Output\nPlan / Notes / Code / Tasks]
+```
+
+---
+
+## Docs
+
+- 项目描述原文：[`docs/project-description.md`](docs/project-description.md)
+
+---
+
+## Repository Structure
+
+```
+sherlock/
+├── src/
+│   ├── orchestrator/   # Workflow router & intent dispatcher
+│   ├── agents/         # Individual agent implementations
+│   ├── memory/         # Progressive summarization & long-term memory
+│   ├── pipelines/      # Long-doc, planning, and code agent pipelines
+│   └── tools/          # Shared utility tools & integrations
+├── tests/              # Unit and integration tests
+├── docs/               # Project documentation
+├── pyproject.toml      # Python project metadata
+└── README.md
+```
+
+## Tech Stack
+
+- **LangChain** — chain orchestration and retrieval
+- **AutoGen** — multi-agent conversation framework
+- **MiMo** — reasoning-optimized local model for intent triage
+- Python 3.11+
