@@ -1,61 +1,64 @@
-# Sherlock — 基于多智能体协作的全知全能型个人学术与工作流助理
+# Face Emotion Recognition System (Initial Framework)
 
-本项目"Sherlock"旨在构建一个基于多智能体协作的个人学术与工作流助理，其核心架构注定了它是一个高Token消耗的应用。为了实现对复杂任务的深度理解而非浅层问答，我大量应用了公认的"Token倍增器"技术：在长文档处理上，我采用链式思维与思维树进行层次化摘要与矛盾点挖掘，需要将完整上下文带入进行多步串行推理；在任务规划上，我构建了基于多Agent协作的"辩论-反思"架构，通过红蓝军对抗与自我博弈生成计划，单次任务需维持包含复杂历史记录的多轮长上下文窗口；在代码生成上，我实现了带自动化测试的自修护闭环，模型需要反复阅读源码、报错与环境输出来进行反思修正；并且，系统后台还在持续进行基于渐进式摘要的长期记忆压缩。这些多步推理与密集型自监督流程，使得单项任务的Token消耗可达普通对话的6至8倍，动辄单次即消耗上万Token。本项目重度依赖 LangChain、AutoGen、MiMo 等大模型应用架构，才有能力编排如此复杂的链式调用。当然，我在架构设计上也力求资源合理化，正在探索通过本地小模型对简单意图进行分流，仅在涉及高价值、强逻辑的多步推理任务时，才调用大规模云端模型，力求在极致的智能深度与资源消耗间取得平衡。
-
----
+This repository now includes an initial scaffold for a realtime face emotion recognition system with a Java backend, Vue 3 frontend, AI placeholder service, SQL Server schema, and Docker Compose stack.
 
 ## Architecture
 
-```mermaid
-flowchart TB
-    U[User] --> UI[CLI / Web UI]
-    UI --> ORCH[Orchestrator\nWorkflow Router]
+- **Backend**: Spring Boot + WebFlux (`emotion-system/backend`)
+  - Task management module (`task`)
+  - Video/stream processing placeholder (`stream`)
+  - OpenCV integration placeholder (`opencv`)
+  - AI inference client placeholder (`ai`)
+  - Fusion service (`fusion`)
+  - Advice service (`advice`)
+  - WebSocket endpoint (`ws`) at `/ws/emotion/{taskId}`
+  - REST controllers (`task`, `api`)
+  - Configuration-driven emotion types (`emotion.types` in `application.yml`)
+- **Frontend**: Vue 3 + Vite (`emotion-system/frontend`)
+  - Task management page placeholder (`/tasks`)
+  - Realtime dashboard page placeholder (`/dashboard`)
+- **AI Service**: FastAPI placeholder (`emotion-system/ai-service`)
+- **Database**: SQL Server schema and seed scripts (`emotion-system/infra/sql/schema.sql`)
+- **Container Orchestration**: Docker Compose (`emotion-system/docker-compose.yml`)
 
-    ORCH -->|Simple intent| LOCAL[Local Small Model\nIntent Triage]
-    LOCAL --> ORCH
+## Services in Docker Compose
 
-    ORCH -->|Complex task| CTX[Context Builder\nLong-context Packing]
-    CTX --> MEM[Memory System\nProgressive Summarization]
-    MEM --> CTX
+- `api-service`: Spring Boot WebFlux API (port `8080`)
+- `ai-service`: placeholder model service (port `5000`)
+- `sqlserver`: SQL Server 2022 (port `1433`)
+- `sql-init`: one-shot SQL schema bootstrap runner
 
-    CTX --> DOC[Long-Doc Pipeline\nCoT / ToT Summaries + Contradiction Mining]
-    CTX --> PLAN[Planning Arena\nMulti-Agent Debate Red/Blue + Reflection]
-    CTX --> CODE[Code Agent Loop\nCode → Test → Error → Reflect → Patch]
+Environment variables used:
 
-    DOC --> ORCH
-    PLAN --> ORCH
-    CODE --> ORCH
+- `MSSQL_SA_PASSWORD` (default: `YourStrong!Passw0rd`)
+- `AI_SERVICE_BASE_URL` (set by compose to `http://ai-service:5000`)
+- `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, `SPRING_DATASOURCE_PASSWORD`
 
-    ORCH --> OUT[Structured Output\nPlan / Notes / Code / Tasks]
+## Run the Stack
+
+```bash
+cd emotion-system
+docker compose up --build
 ```
 
----
+## Local Development
 
-## Docs
+### Backend
 
-- 项目描述原文：[`docs/project-description.md`](docs/project-description.md)
-
----
-
-## Repository Structure
-
-```
-sherlock/
-├── src/
-│   ├── orchestrator/   # Workflow router & intent dispatcher
-│   ├── agents/         # Individual agent implementations
-│   ├── memory/         # Progressive summarization & long-term memory
-│   ├── pipelines/      # Long-doc, planning, and code agent pipelines
-│   └── tools/          # Shared utility tools & integrations
-├── tests/              # Unit and integration tests
-├── docs/               # Project documentation
-├── pyproject.toml      # Python project metadata
-└── README.md
+```bash
+cd emotion-system/backend
+mvn spring-boot:run
 ```
 
-## Tech Stack
+### Frontend
 
-- **LangChain** — chain orchestration and retrieval
-- **AutoGen** — multi-agent conversation framework
-- **MiMo** — reasoning-optimized local model for intent triage
-- Python 3.11+
+```bash
+cd emotion-system/frontend
+npm install
+npm run dev
+```
+
+## Notes
+
+- This is intentionally a minimal, buildable scaffold.
+- AI model inference, FFmpeg streaming, and OpenCV runtime wiring are left as TODO placeholders for later integration.
